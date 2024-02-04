@@ -6,7 +6,7 @@ const HomePage = () => {
       <main className="container-home">
         <p className="title-home">My Cloud</p>
         <div className="buttons-home">
-          <Link className="button registration" to="">
+          <Link className="button registration" to="/registration">
             Регистрация
           </Link>
           <Link className="button come" to="">

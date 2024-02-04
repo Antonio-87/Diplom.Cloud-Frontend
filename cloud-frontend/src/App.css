@@ -3,7 +3,8 @@
   font-size: 16px;
 }
 
-.container-home {
+.container-home,
+.form-registration {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -27,7 +28,8 @@
   margin-top: 5rem;
 }
 
-.button {
+.button,
+.button-submit {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 10rem;
   height: 2rem;
@@ -38,4 +40,28 @@
   border-radius: 10px;
   text-align: center;
   line-height: 2rem;
+}
+
+.form-registration {
+  width: 30rem;
+  align-items: start;
+  top: 45%;
+}
+
+.input {
+  width: 25rem;
+  height: 3rem;
+  margin-left: 2rem;
+}
+
+label {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  margin-left: 3rem;
+}
+
+.button-submit {
+  margin-left: 17.5rem;
+  margin-top: 2rem;
+  line-height: 1rem;
 }
