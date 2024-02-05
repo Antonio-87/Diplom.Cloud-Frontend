@@ -20,6 +20,20 @@ const RegistrationForm = () => {
     e.preventDefault();
   };
 
+  const validate = (input: {
+    validity: any;
+    setCustomValidity: (arg0: string) => void;
+  }) => {
+    let validityState_object = input.validity;
+    if (validityState_object.valueMissing) {
+      input.setCustomValidity("Поле обязательно к заполнению!");
+    } else if (validityState_object.patternMismatch) {
+      input.setCustomValidity("Формат не соответствует!");
+    } else {
+      input.setCustomValidity("");
+    }
+  };
+
   return (
     <form
       className="form-registration"
@@ -27,22 +41,30 @@ const RegistrationForm = () => {
       onSubmit={hendleSubmit}
     >
       <label htmlFor="login">Login</label>
+      <span className="format">
+        Формат: (только латинские буквы и цифры, первый символ — буква, длина от
+        4 до 20 символов)
+      </span>
       <input
         type="text"
         id="login"
         className="input login"
         defaultValue={login}
         onChange={(event) => setLogin(event.target.value)}
+        onInput={(input) => validate(input.currentTarget)}
         pattern="^(?=[a-zA-Z])([a-zA-Z0-9]{4,20})$"
+        placeholder="Введите логин"
         required
       />
       <label htmlFor="full-name">Полное Имя</label>
+      <span className="format">Формат: (Петров Петр Петрович)</span>
       <input
         type="text"
         id="full-name"
         className="input full-name"
         defaultValue={fullName}
         onChange={(event) => setFullName(event.target.value)}
+        placeholder="Введите полное имя"
         required
       />
       <label htmlFor="email">Email</label>
@@ -52,9 +74,14 @@ const RegistrationForm = () => {
         className="input email"
         defaultValue={email}
         onChange={(event) => setEmail(event.target.value)}
+        placeholder="Введите imail"
         required
       />
       <label htmlFor="password">Password</label>
+      <span className="format">
+        Формат: (не менее 6 символов: как минимум одна заглавная буква, одна
+        цифра и один специальный символ)
+      </span>
       <input
         type="text"
         id="password"
@@ -62,6 +89,7 @@ const RegistrationForm = () => {
         defaultValue={password}
         onChange={(event) => setPassword(event.target.value)}
         pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$"
+        placeholder="Введите пароль"
         required
       />
       <button type="submit" className="button-submit">
