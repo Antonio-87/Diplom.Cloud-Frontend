@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { validate } from "../functions/validate";
 
 const RegistrationForm = () => {
   const [login, setLogin] = useState<string>("");
@@ -13,7 +14,7 @@ const RegistrationForm = () => {
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_HOST}user`, {
+        const response = await fetch(`${process.env.REACT_APP_HOST}users`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -25,26 +26,17 @@ const RegistrationForm = () => {
             password: password,
           }),
         });
-        if (response.ok) navigate(-1);
+        if (response.ok) navigate("/", { replace: true });
       } catch (e) {
         new Error(`No create user`);
       }
     };
     fetchData();
-  };
 
-  const validate = (input: {
-    validity: any;
-    setCustomValidity: (arg0: string) => void;
-  }) => {
-    let validityState_object = input.validity;
-    if (validityState_object.valueMissing) {
-      input.setCustomValidity("Поле обязательно к заполнению!");
-    } else if (validityState_object.patternMismatch) {
-      input.setCustomValidity("Формат не соответствует!");
-    } else {
-      input.setCustomValidity("");
-    }
+    setLogin("");
+    setFullName("");
+    setEmail("");
+    setPassword("");
   };
 
   return (
