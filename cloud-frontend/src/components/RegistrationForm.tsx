@@ -1,23 +1,36 @@
-import { useEffect, useState } from "react";
-
-type RegistrObj = {
-  login: string;
-  fullName: string;
-  mail: string;
-  password: string;
-};
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
-  const [registr, setRegistr] = useState<RegistrObj>();
   const [login, setLogin] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
-  useEffect(() => {}, [registr]);
+  const navigate = useNavigate();
 
   const hendleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_HOST}user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            login: login,
+            fullName: fullName,
+            email: email,
+            password: password,
+          }),
+        });
+        if (response.ok) navigate(-1);
+      } catch (e) {
+        new Error(`No create user`);
+      }
+    };
+    fetchData();
   };
 
   const validate = (input: {
