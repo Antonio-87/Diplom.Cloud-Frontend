@@ -35,8 +35,8 @@ const AuthenticationForm = () => {
     if (user && user.password !== password) alert("Пароль не верный");
 
     user.admin === true
-      ? navigate("/user", { replace: true })
-      : navigate("/admin", { replace: true });
+      ? navigate("/admin", { replace: true })
+      : navigate("/user", { replace: true });
     setLogin("");
     setPassword("");
   };
