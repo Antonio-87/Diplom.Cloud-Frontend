@@ -10,7 +10,7 @@ const HomePage = () => {
             Регистрация
           </Link>
           <Link className="button come" to="/authentication">
-            Войти
+            Вход
           </Link>
         </div>
       </main>

@@ -4,6 +4,7 @@ import "./App.css";
 import HomePage from "./components/HomePage";
 import RegistrationForm from "./components/RegistrationForm";
 import AuthenticationForm from "./components/AuthenticationForm";
+import Admin from "./components/Admin";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="registration" element={<RegistrationForm />} />
         <Route path="authentication" element={<AuthenticationForm />} />
+        {/* <Route path="admin" element={<Admin />} /> */}
       </Routes>
     </Router>
   );

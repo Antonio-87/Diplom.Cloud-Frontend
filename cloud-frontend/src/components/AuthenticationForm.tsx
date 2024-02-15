@@ -22,7 +22,8 @@ const AuthenticationForm = () => {
 
   useEffect(() => {
     if (typeof data === "string") users.current = JSON.parse(data);
-  }, [data]);
+    if (error) console.log(error.message);
+  }, [data, error]);
 
   const hendleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -32,7 +33,10 @@ const AuthenticationForm = () => {
       return;
     }
 
-    if (user && user.password !== password) alert("Пароль не верный");
+    if (user && user.password !== password) {
+      alert("Пароль не верный");
+      return;
+    }
 
     user.admin === true
       ? navigate("/admin", { replace: true })
@@ -44,7 +48,7 @@ const AuthenticationForm = () => {
   return (
     <>
       {loading && <div className="loading">Loading...</div>}
-      {error && <div className="loading">Error...</div>}
+      {error && <div className="error">Error...</div>}
       <form
         className="form-registration"
         name="form-registaration"
@@ -81,9 +85,20 @@ const AuthenticationForm = () => {
           placeholder="Введите пароль"
           required
         />
-        <button type="submit" className="button-submit">
-          Войти
-        </button>
+        <div className="buttons-auth">
+          <button
+            className="button-exit"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/", { replace: true });
+            }}
+          >
+            Выход
+          </button>
+          <button type="submit" className="button-submit-auth">
+            Вход
+          </button>
+        </div>
       </form>
     </>
   );

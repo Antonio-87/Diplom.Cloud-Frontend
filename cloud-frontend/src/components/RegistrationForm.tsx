@@ -97,9 +97,20 @@ const RegistrationForm = () => {
         placeholder="Введите пароль"
         required
       />
-      <button type="submit" className="button-submit">
-        Зарегистрироваться
-      </button>
+      <div className="buttons-reg">
+        <button
+          className="button-exit"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/", { replace: true });
+          }}
+        >
+          Выход
+        </button>
+        <button type="submit" className="button-submit-reg">
+          Зарегистрироваться
+        </button>
+      </div>
     </form>
   );
 };

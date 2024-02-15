@@ -21,15 +21,23 @@
   margin: 0;
 }
 
-.buttons-home {
+.buttons-home,
+.buttons-reg,
+.buttons-auth {
   display: flex;
   justify-content: space-around;
   width: 30rem;
   margin-top: 5rem;
 }
 
+.buttons-reg {
+  margin-top: 0;
+}
+
 .button,
-.button-submit {
+.button-submit-reg,
+.button-exit,
+.button-submit-auth {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 10rem;
   height: 2rem;
@@ -69,8 +77,21 @@ label,
   margin: 0 2rem 0.5rem 2rem;
 }
 
-.button-submit {
-  margin-left: 19.3rem;
+.button-submit-reg {
+  width: 15rem;
+  margin-top: 1rem;
+}
+
+.buttons-auth {
+  margin-top: 1rem;
+}
+
+.button-submit-reg,
+.button-submit-auth,
+.button-exit {
+  font-size: 16px;
+  height: 3rem;
+  margin-left: 1.5rem;
   margin-top: 1rem;
   line-height: 1rem;
 }
