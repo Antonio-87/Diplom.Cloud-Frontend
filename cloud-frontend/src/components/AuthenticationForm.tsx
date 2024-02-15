@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { validate } from "../functions/validate";
 import useJsonFetch from "../hooks/useJsonFetch";
 
-interface User {
+export interface User {
+  id: number;
   login: string;
   fullName: string;
   email: string;
