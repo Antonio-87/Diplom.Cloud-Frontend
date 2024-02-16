@@ -3,15 +3,15 @@ import useJsonFetch from "../hooks/useJsonFetch";
 import { User } from "./AuthenticationForm";
 import { useNavigate, useParams } from "react-router-dom";
 
-// const user = [
-//   {
-//     id: 123456,
-//     login: "Anton",
-//     fullName: "Петров Петр Петрович",
-//     email: "aefzas@email.ru",
-//     admin: true,
-//   },
-// ];
+const userJson = [
+  {
+    id: 123456,
+    login: "Anton",
+    fullName: "Петров Петр Петрович",
+    email: "aefzas@email.ru",
+    admin: true,
+  },
+];
 
 const Admin = () => {
   const userId = useParams();
@@ -19,7 +19,7 @@ const Admin = () => {
   const { data, loading, error } = useJsonFetch(
     `${process.env.REACT_APP_HOST}`
   );
-  const users = useRef<User[]>();
+  const users = useRef<User[]>(userJson);
   const admin = users.current?.find((user) => user.id === Number(userId));
 
   useEffect(() => {
@@ -31,26 +31,41 @@ const Admin = () => {
     <>
       {loading && <div className="loading">Loading...</div>}
       {error && <div className="error">Error...</div>}
-      <header className="header-admin">Администратор: {admin?.login}</header>
+      <header className="header-admin">
+        <p className="title">Администратор: {admin?.login}</p>
+        <button
+          className="button-exit-admin"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate("/", { replace: true });
+          }}
+        >
+          Выход
+        </button>
+      </header>
       <main className="users">
-        <ul className="users-list">
-          {users.current?.map((user) => {
-            return (
-              <li
-                className="item-user"
-                key={user.id}
-                onClick={() => navigate(`/user/${user.id}`)}
-              >
-                <p className="login">
-                  {user.login}{" "}
+        <table className="users-list">
+          <thead>
+            <tr>
+              <th>Login</th>
+              <th>Status admin</th>
+              <th>Full Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.current?.map((user) => (
+              <tr key={user.id} onClick={() => navigate(`/user/${user.id}`)}>
+                <td className="login">{user.login} </td>
+                <td className="status">
                   {user.admin && <span className="check-admin">admin</span>}
-                </p>
-                <p className="name">{user.fullName}</p>
-                <p className="email">{user.email}</p>
-              </li>
-            );
-          })}
-        </ul>
+                </td>
+                <td className="full-name">{user.fullName}</td>
+                <td className="email">{user.email}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </main>
     </>
   );

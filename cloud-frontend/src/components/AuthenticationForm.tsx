@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validate } from "../functions/validate";
-import useJsonFetch from "../hooks/useJsonFetch";
+// import useJsonFetch from "../hooks/useJsonFetch";
 
 export interface User {
   id: number;
   login: string;
   fullName: string;
   email: string;
-  password: string;
+  password?: string;
   admin: boolean;
 }
 
@@ -16,15 +16,25 @@ const AuthenticationForm = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { data, loading, error } = useJsonFetch(
-    `${process.env.REACT_APP_HOST}`
-  );
-  const users = useRef<User[]>();
+  // const { data, loading, error } = useJsonFetch(
+  //   `${process.env.REACT_APP_HOST}`
+  // );
+  const data = [
+    {
+      id: 123456,
+      login: "Anton",
+      fullName: "Петров Петр Петрович",
+      email: "aefzas@email.ru",
+      password: "Da1_sd",
+      admin: true,
+    },
+  ];
+  const users = useRef<User[]>(data);
 
   useEffect(() => {
     if (typeof data === "string") users.current = JSON.parse(data);
-    if (error) console.log(error.message);
-  }, [data, error]);
+    // if (error) console.log(error.message);
+  }, []);
 
   const hendleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -40,16 +50,16 @@ const AuthenticationForm = () => {
     }
 
     user.admin === true
-      ? navigate("/admin", { replace: true })
-      : navigate("/user", { replace: true });
+      ? navigate(`/admin/${user.id}`, { replace: true })
+      : navigate(`/user/${user.id}`, { replace: true });
     setLogin("");
     setPassword("");
   };
 
   return (
     <>
-      {loading && <div className="loading">Loading...</div>}
-      {error && <div className="error">Error...</div>}
+      {/* {loading && <div className="loading">Loading...</div>}
+      {error && <div className="error">Error...</div>} */}
       <form
         className="form-registration"
         name="form-registaration"

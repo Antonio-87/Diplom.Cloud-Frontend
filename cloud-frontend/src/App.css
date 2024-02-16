@@ -97,6 +97,7 @@ label,
 .button,
 .button-submit-reg,
 .button-exit,
+.button-exit-admin,
 .button-submit-auth {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 10rem;
@@ -117,10 +118,67 @@ label,
 
 .button-submit-reg,
 .button-submit-auth,
-.button-exit {
+.button-exit,
+.button-exit-admin {
   font-size: 16px;
   height: 3rem;
   margin-left: 1.5rem;
   margin-top: 1rem;
   line-height: 1rem;
+}
+
+.button-exit-admin {
+  margin: 0;
+}
+
+/* ;;;;;;;;;;;;;;;;;;;;;;;;;;; */
+.header-admin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ddd;
+  /* color: white; */
+  padding: 1rem;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+}
+
+.users {
+  margin-top: 2rem;
+}
+
+.users-list {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-list th {
+  background-color: rgb(53, 118, 215);
+  color: white;
+  padding: 0.5rem;
+}
+
+.users-list td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+}
+
+/* .users-list tr:hover {
+  background-color: #f9f9f9;
+} */
+
+.login {
+  font-weight: bold;
+}
+
+.check-admin {
+  background-color: rgb(53, 215, 88);
+  color: white;
+  padding: 0.2rem;
+  border-radius: 5px;
+}
+
+.full-name,
+.email {
+  max-width: 10rem;
 }
