@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useJsonFetch from "../hooks/useJsonFetch";
 import { User } from "./AuthenticationForm";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,7 +14,8 @@ const userJson = [
 ];
 
 const Admin = () => {
-  const userId = useParams();
+  const { userId } = useParams();
+  const [statusAdmin, setStatusAdmin] = useState<boolean>();
   const navigate = useNavigate();
   const { data, loading, error } = useJsonFetch(
     `${process.env.REACT_APP_HOST}`
@@ -25,7 +26,31 @@ const Admin = () => {
   useEffect(() => {
     if (typeof data === "string") users.current = JSON.parse(data);
     if (error) console.log(error.message);
-  }, [data, error]);
+  }, [data, error, statusAdmin]);
+
+  const statusChenge = () => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_HOST}users/${userId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ admin: statusAdmin }),
+          }
+        );
+        if (response.ok) {
+          console.log("Статус изменен!");
+          statusAdmin ? setStatusAdmin(false) : setStatusAdmin(true);
+        }
+      } catch {
+        new Error("Статус не зименен!");
+      }
+    };
+    fetchData();
+  };
 
   return (
     <>
@@ -44,24 +69,33 @@ const Admin = () => {
         </button>
       </header>
       <main className="users">
-        <table className="users-list">
-          <thead>
-            <tr>
-              <th>Login</th>
-              <th>Status admin</th>
-              <th>Full Name</th>
-              <th>Email</th>
+        <table>
+          <thead className="users-header">
+            <tr className="titles">
+              <th className="title-login">Login</th>
+              <th className="title-status">Status admin</th>
+              <th className="title-full-name">Full Name</th>
+              <th className="title-email">Email</th>
             </tr>
           </thead>
           <tbody>
             {users.current?.map((user) => (
-              <tr key={user.id} onClick={() => navigate(`/user/${user.id}`)}>
-                <td className="login">{user.login} </td>
-                <td className="status">
+              <tr
+                className="users-list"
+                key={user.id}
+                onClick={() => navigate(`/user/${user.id}`)}
+              >
+                <td className="admin-login">{user.login} </td>
+                <td className="admin-status">
                   {user.admin && <span className="check-admin">admin</span>}
+                  <div className="status-chenge" onClick={() => statusChenge()}>
+                    {user.admin
+                      ? "Удалить статус admin"
+                      : "Присвоить статус admin"}
+                  </div>
                 </td>
-                <td className="full-name">{user.fullName}</td>
-                <td className="email">{user.email}</td>
+                <td className="admin-full-name">{user.fullName}</td>
+                <td className="admin-email">{user.email}</td>
               </tr>
             ))}
           </tbody>

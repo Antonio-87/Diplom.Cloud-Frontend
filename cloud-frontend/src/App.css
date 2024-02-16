@@ -131,54 +131,83 @@ label,
   margin: 0;
 }
 
-/* ;;;;;;;;;;;;;;;;;;;;;;;;;;; */
 .header-admin {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 96vw;
   background-color: #ddd;
-  /* color: white; */
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   border: 1px solid #ddd;
-  padding: 0.5rem;
 }
 
 .users {
   margin-top: 2rem;
 }
 
-.users-list {
-  width: 100%;
+.users-header,
+table {
+  width: 98.5vw;
   border-collapse: collapse;
 }
 
-.users-list th {
+.users-header th {
   background-color: rgb(53, 118, 215);
   color: white;
   padding: 0.5rem;
 }
 
-.users-list td {
+.users-header,
+.users-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.title-login,
+.title-status,
+.title-full-name,
+.title-email {
+  width: 20rem;
+}
+
+.users-list {
+  width: 98.3vw;
   border: 1px solid #ddd;
-  padding: 0.5rem;
+  border-collapse: collapse;
 }
 
-/* .users-list tr:hover {
-  background-color: #f9f9f9;
-} */
-
-.login {
-  font-weight: bold;
+.status {
+  justify-content: space-between;
 }
 
-.check-admin {
+.check-admin,
+.status-chenge {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
   background-color: rgb(53, 215, 88);
   color: white;
   padding: 0.2rem;
   border-radius: 5px;
 }
 
-.full-name,
-.email {
-  max-width: 10rem;
+.status-chenge {
+  background-color: rgb(215, 53, 58);
+  text-align: center;
+  margin-left: auto;
+}
+
+.admin-login,
+.admin-status,
+.admin-full-name,
+.admin-email {
+  display: flex;
+  width: 21rem;
+}
+
+td {
+  padding: 1rem 1rem;
+}
+
+td:nth-child(n + 2) {
+  border-left: 1px solid #ddd;
 }
