@@ -166,7 +166,9 @@ table {
 .title-login,
 .title-status,
 .title-full-name,
-.title-email {
+.title-email,
+.title-files,
+.title-size {
   width: 20rem;
 }
 
@@ -191,17 +193,22 @@ table {
 }
 
 .status-chenge {
+  cursor: pointer;
   background-color: rgb(215, 53, 58);
   text-align: center;
-  margin-left: auto;
+  margin-left: 2rem;
 }
 
 .admin-login,
 .admin-status,
 .admin-full-name,
-.admin-email {
+.admin-email,
+.admin-files,
+.admin-size {
   display: flex;
-  width: 21rem;
+  justify-content: center;
+  align-items: center;
+  width: 15rem;
 }
 
 td {

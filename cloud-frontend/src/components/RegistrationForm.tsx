@@ -1,12 +1,24 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validate } from "../functions/validate";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  registrationState,
+  setEmail,
+  setFullName,
+  setLogin,
+  setPassword,
+} from "../slices/registrationSlice";
 
 const RegistrationForm = () => {
-  const [login, setLogin] = useState<string>("");
-  const [fullName, setFullName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  // const [login, setLogin] = useState<string>("");
+  // const [fullName, setFullName] = useState<string>("");
+  // const [email, setEmail] = useState<string>("");
+  // const [password, setPassword] = useState<string>("");
+  const { login, fullName, email, password } = useSelector(
+    (state: { registration: registrationState }) => state.registration
+  );
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const hendleSubmit = (e: { preventDefault: () => void }) => {
@@ -26,17 +38,21 @@ const RegistrationForm = () => {
             password: password,
           }),
         });
-        if (response.ok) navigate("/", { replace: true });
+        if (response.ok) navigate("/authentication", { replace: true });
       } catch (e) {
         new Error(`No create user`);
       }
     };
     fetchData();
 
-    setLogin("");
-    setFullName("");
-    setEmail("");
-    setPassword("");
+    // setLogin("");
+    // setFullName("");
+    // setEmail("");
+    // setPassword("");
+    dispatch(setLogin(""));
+    dispatch(setFullName(""));
+    dispatch(setEmail(""));
+    dispatch(setPassword(""));
   };
 
   return (
@@ -55,7 +71,7 @@ const RegistrationForm = () => {
         id="login"
         className="input login"
         defaultValue={login}
-        onChange={(event) => setLogin(event.target.value)}
+        onChange={(event) => dispatch(setLogin(event.target.value))}
         onInput={(input) => validate(input.currentTarget)}
         pattern="^(?=[a-zA-Z])([a-zA-Z0-9]{4,20})$"
         placeholder="Введите логин"
@@ -68,7 +84,7 @@ const RegistrationForm = () => {
         id="full-name"
         className="input full-name"
         defaultValue={fullName}
-        onChange={(event) => setFullName(event.target.value)}
+        onChange={(event) => dispatch(setFullName(event.target.value))}
         placeholder="Введите полное имя"
         required
       />
@@ -78,7 +94,7 @@ const RegistrationForm = () => {
         id="email"
         className="input email"
         defaultValue={email}
-        onChange={(event) => setEmail(event.target.value)}
+        onChange={(event) => dispatch(setEmail(event.target.value))}
         placeholder="Введите imail"
         required
       />
@@ -92,7 +108,7 @@ const RegistrationForm = () => {
         id="password"
         className="input password"
         defaultValue={password}
-        onChange={(event) => setPassword(event.target.value)}
+        onChange={(event) => dispatch(setPassword(event.target.value))}
         pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$"
         placeholder="Введите пароль"
         required

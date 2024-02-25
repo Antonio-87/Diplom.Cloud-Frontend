@@ -9,6 +9,8 @@ const userJson = [
     login: "Anton",
     fullName: "Петров Петр Петрович",
     email: "aefzas@email.ru",
+    files: 100,
+    size: 1000,
     admin: true,
   },
 ];
@@ -76,6 +78,8 @@ const Admin = () => {
               <th className="title-status">Status admin</th>
               <th className="title-full-name">Full Name</th>
               <th className="title-email">Email</th>
+              <th className="title-files">Files</th>
+              <th className="title-size">Size</th>
             </tr>
           </thead>
           <tbody>
@@ -89,13 +93,13 @@ const Admin = () => {
                 <td className="admin-status">
                   {user.admin && <span className="check-admin">admin</span>}
                   <div className="status-chenge" onClick={() => statusChenge()}>
-                    {user.admin
-                      ? "Удалить статус admin"
-                      : "Присвоить статус admin"}
+                    {user.admin ? "status off" : "status add"}
                   </div>
                 </td>
                 <td className="admin-full-name">{user.fullName}</td>
                 <td className="admin-email">{user.email}</td>
+                <td className="admin-files">{user.files}</td>
+                <td className="admin-size">{user.size}</td>
               </tr>
             ))}
           </tbody>

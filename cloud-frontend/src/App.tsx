@@ -14,7 +14,7 @@ function App() {
         <Route path="registration" element={<RegistrationForm />} />
         <Route path="authentication" element={<AuthenticationForm />} />
         <Route path="admin/:userId" element={<Admin />} />
-        <Route path="user/:userId" element={<Admin />} />
+        {/* <Route path="user/:userId" element={<User />} /> */}
       </Routes>
     </Router>
   );
