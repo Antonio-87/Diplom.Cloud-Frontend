@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import useJsonFetch from "../hooks/useJsonFetch";
-import { User } from "./AuthenticationForm";
+import { User } from "../interfaces/userInterface";
 import { useNavigate, useParams } from "react-router-dom";
 
 const userJson = [

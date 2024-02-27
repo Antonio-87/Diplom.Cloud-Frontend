@@ -1,13 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Registration } from "../interfaces/registrationInterface";
 
-export interface registrationState {
-  login: string;
-  fullName: string;
-  email: string;
-  password: string;
-}
-
-const initialState: registrationState = {
+const initialState: Registration = {
   login: "",
   fullName: "",
   email: "",

@@ -2,28 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validate } from "../functions/validate";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  registrationState,
-  setLogin,
-  setPassword,
-} from "../slices/registrationSlice";
+import { setLogin, setPassword } from "../slices/registrationSlice";
+import { User } from "../interfaces/userInterface";
+import { Registration } from "../interfaces/registrationInterface";
 // import useJsonFetch from "../hooks/useJsonFetch";
-
-export interface User {
-  id: number;
-  login: string;
-  fullName: string;
-  email: string;
-  password?: string;
-  files?: number;
-  size?: number;
-  admin: boolean;
-}
 
 const AuthenticationForm = () => {
   const navigate = useNavigate();
   const { login, password } = useSelector(
-    (state: { registration: registrationState }) => state.registration
+    (state: { registration: Registration }) => state.registration
   );
   const dispatch = useDispatch();
   // const [login, setLogin] = useState<string>("");
@@ -92,7 +79,6 @@ const AuthenticationForm = () => {
           defaultValue={login}
           onChange={(event) => {
             dispatch(setLogin(event.target.value));
-            console.log(login);
           }}
           onInput={(input) => validate(input.currentTarget)}
           pattern="^(?=[a-zA-Z])([a-zA-Z0-9]{4,20})$"
@@ -108,7 +94,7 @@ const AuthenticationForm = () => {
           type="text"
           id="password"
           className="input password"
-          defaultValue={password}
+          value={password}
           onChange={(event) => {
             dispatch(setPassword(event.target.value));
           }}
