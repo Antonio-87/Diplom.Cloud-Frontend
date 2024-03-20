@@ -1,65 +1,49 @@
 import { useEffect, useRef, useState } from "react";
-import useJsonFetch from "../hooks/useJsonFetch";
 import { User } from "../interfaces/userInterface";
 import { useNavigate, useParams } from "react-router-dom";
-
-const userJson = [
-  {
-    id: 123456,
-    login: "Anton",
-    fullName: "Петров Петр Петрович",
-    email: "aefzas@email.ru",
-    files: 100,
-    size: 1000,
-    admin: true,
-  },
-];
 
 const Admin = () => {
   const { userId } = useParams();
   const [statusAdmin, setStatusAdmin] = useState<boolean>();
   const navigate = useNavigate();
-  const { data, loading, error } = useJsonFetch(
-    `${process.env.REACT_APP_HOST}`
-  );
-  const users = useRef<User[]>(userJson);
+  const users = useRef<User[]>();
   const admin = users.current?.find((user) => user.id === Number(userId));
 
   useEffect(() => {
-    if (typeof data === "string") users.current = JSON.parse(data);
-    if (error) console.log(error.message);
-  }, [data, error, statusAdmin]);
+    // if (typeof data === "string") users.current = JSON.parse(data);
+    // if (error) console.log(error.message);
+  }, [statusAdmin]);
 
   const statusChenge = () => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_HOST}users/${userId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ admin: statusAdmin }),
-          }
-        );
-        if (response.ok) {
-          console.log("Статус изменен!");
-          statusAdmin ? setStatusAdmin(false) : setStatusAdmin(true);
-        }
-      } catch {
-        new Error("Статус не зименен!");
-      }
-    };
-    fetchData();
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       `${process.env.REACT_APP_HOST}users/${userId}`,
+    //       {
+    //         method: "PUT",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({ admin: statusAdmin }),
+    //       }
+    //     );
+    //     if (response.ok) {
+    //       console.log("Статус изменен!");
+    //       statusAdmin ? setStatusAdmin(false) : setStatusAdmin(true);
+    //     }
+    //   } catch {
+    //     new Error("Статус не зименен!");
+    //   }
+    // };
+    // fetchData();
   };
 
   return (
     <>
-      {loading && <div className="loading">Loading...</div>}
-      {error && <div className="error">Error...</div>}
+      {/* {loading && <div className="loading">Loading...</div>}
+      {error && <div className="error">Error...</div>} */}
       <header className="header-admin">
-        <p className="title">Администратор: {admin?.login}</p>
+        <p className="title">Administartor: {admin?.login}</p>
         <button
           className="button-exit-admin"
           onClick={(e) => {
@@ -67,7 +51,7 @@ const Admin = () => {
             navigate("/", { replace: true });
           }}
         >
-          Выход
+          Exit
         </button>
       </header>
       <main className="users">

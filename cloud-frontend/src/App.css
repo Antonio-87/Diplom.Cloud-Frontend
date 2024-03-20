@@ -58,9 +58,13 @@
 
 .input {
   width: 25rem;
-  height: 3rem;
+  height: 2rem;
   padding: 0.5rem 1rem 0.5rem 1rem;
   margin-left: 2rem;
+}
+
+.repeat-password {
+  margin-top: 1rem;
 }
 
 label,

@@ -4,9 +4,9 @@ const validate = (input: {
 }) => {
   let validityState_object = input.validity;
   if (validityState_object.valueMissing) {
-    input.setCustomValidity("Поле обязательно к заполнению!");
+    input.setCustomValidity("This field is required!");
   } else if (validityState_object.patternMismatch) {
-    input.setCustomValidity("Формат не соответствует!");
+    input.setCustomValidity("Format does not match!");
   } else {
     input.setCustomValidity("");
   }

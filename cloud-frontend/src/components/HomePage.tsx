@@ -7,10 +7,10 @@ const HomePage = () => {
         <p className="title-home">My Cloud</p>
         <div className="buttons-home">
           <Link className="button registration" to="/registration">
-            Регистрация
+            Registration
           </Link>
           <Link className="button come" to="/authentication">
-            Вход
+            Enter
           </Link>
         </div>
       </main>

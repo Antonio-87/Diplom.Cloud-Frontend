@@ -1,90 +1,49 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { validate } from "../functions/validate";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setEmail,
-  setFullName,
-  setLogin,
-  setPassword,
-} from "../slices/registrationSlice";
-import { Registration } from "../interfaces/registrationInterface";
-import { Request } from "../interfaces/requestInterface";
-import { bodyRequest } from "../slices/requestsSlice";
-
+import { validate } from "../functions/validateInput";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { bodyUserRequest, getUserRequest } from "../redux/slices/userSlice";
 const RegistrationForm = () => {
-  // const [login, setLogin] = useState<string>("");
-  // const [fullName, setFullName] = useState<string>("");
-  // const [email, setEmail] = useState<string>("");
-  // const [password, setPassword] = useState<string>("");
-  const { login, fullName, email, password } = useSelector(
-    (state: { registration: Registration }) => state.registration
-  );
-  const { data, loading, error, search } = useSelector(
-    (state: { requests: Request }) => state.requests
-  );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
+  const [login, setLogin] = useState<string>("");
+  const [fullName, setFullName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [repeatPassword, setRepeatPassword] = useState<string>("");
+
+  if (error) console.error(error);
 
   const hendleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-
+    if (password !== repeatPassword) {
+      alert("Password mismatch!");
+      return;
+    }
     dispatch(
-      bodyRequest({
-        url: `${process.env.REACT_APP_HOST}users`,
-        options: {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            login: login,
-            fullName: fullName,
-            email: email,
-            password: password,
-          }),
-        },
+      bodyUserRequest({
+        login: login,
+        fullName: fullName,
+        email: email,
+        password: password,
+        repeatPassword: repeatPassword,
       })
     );
 
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await fetch(`${process.env.REACT_APP_HOST}users`, {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         login: login,
-    //         fullName: fullName,
-    //         email: email,
-    //         password: password,
-    //       }),
-    //     });
-    //     if (response.ok) navigate("/authentication", { replace: true });
-    //   } catch (e) {
-    //     new Error(`No create user`);
-    //   }
-    // };
-    // fetchData();
-
-    // setLogin("");
-    // setFullName("");
-    // setEmail("");
-    // setPassword("");
-    if (error?.message === "304") alert("Логин занят!");
-    if (!error) {
-      dispatch(setLogin(""));
-      dispatch(setFullName(""));
-      dispatch(setEmail(""));
-      dispatch(setPassword(""));
-    }
+    // if (!error) {
+    //   navigate("/authentication", { replace: true });
+    //   setLogin("");
+    //   setFullName("");
+    //   setEmail("");
+    //   setPassword("");
+    // }
   };
 
   return (
     <>
       {loading && <div className="loading">Loading...</div>}
-      {error && <div className="error">Error...</div>}
+      {error && <div className="error">{error}</div>}
       <form
         className="form-registration"
         name="form-registaration"
@@ -92,29 +51,29 @@ const RegistrationForm = () => {
       >
         <label htmlFor="login">Login</label>
         <span className="format">
-          Формат: (только латинские буквы и цифры, первый символ — буква, длина
-          от 4 до 20 символов)
+          Format: (only Latin letters and numbers, the first character is a
+          letter, length from 4 to 20 characters)
         </span>
         <input
           type="text"
           id="login"
           className="input login"
           value={login}
-          onChange={(event) => dispatch(setLogin(event.target.value))}
+          onChange={(event) => setLogin(event.target.value)}
           onInput={(input) => validate(input.currentTarget)}
           pattern="^(?=[a-zA-Z])([a-zA-Z0-9]{4,20})$"
-          placeholder="Введите логин"
+          placeholder="Please enter your login"
           required
         />
-        <label htmlFor="full-name">Полное Имя</label>
-        <span className="format">Формат: (Петров Петр Петрович)</span>
+        <label htmlFor="full-name">Full name</label>
+        <span className="format">Format: (Petrov Petr Petrovich)</span>
         <input
           type="text"
           id="full-name"
           className="input full-name"
           value={fullName}
-          onChange={(event) => dispatch(setFullName(event.target.value))}
-          placeholder="Введите полное имя"
+          onChange={(event) => setFullName(event.target.value)}
+          placeholder="Please enter your full name"
           required
         />
         <label htmlFor="email">Email</label>
@@ -123,37 +82,49 @@ const RegistrationForm = () => {
           id="email"
           className="input email"
           value={email}
-          onChange={(event) => dispatch(setEmail(event.target.value))}
-          placeholder="Введите imail"
+          onChange={(event) => setEmail(event.target.value)}
+          placeholder="Please enter your imail"
           required
         />
         <label htmlFor="password">Password</label>
         <span className="format">
-          Формат: (не менее 6 символов: как минимум одна заглавная буква, одна
-          цифра и один специальный символ)
+          Format: (at least 6 characters: at least one capital letter, one
+          number and one special character)
         </span>
         <input
-          type="text"
+          type="password"
           id="password"
           className="input password"
           value={password}
-          onChange={(event) => dispatch(setPassword(event.target.value))}
+          onChange={(event) => setPassword(event.target.value)}
+          onInput={(input) => validate(input.currentTarget)}
           pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$"
-          placeholder="Введите пароль"
+          placeholder="Please enter your password"
+          required
+        />
+        <input
+          type="password"
+          id="repeat-password"
+          className="input repeat-password"
+          value={repeatPassword}
+          onChange={(event) => setRepeatPassword(event.target.value)}
+          onInput={(input) => validate(input.currentTarget)}
+          placeholder="Please repeat your password"
           required
         />
         <div className="buttons-reg">
           <button
+            type="button"
             className="button-exit"
             onClick={(e) => {
               e.preventDefault();
               navigate("/", { replace: true });
             }}
           >
-            Выход
+            Exit
           </button>
           <button type="submit" className="button-submit-reg">
-            Зарегистрироваться
+            Registration
           </button>
         </div>
       </form>
