@@ -1,7 +1,4 @@
-# MY CLOUD
-
-![Alt text](assets/MyCloud.png)
-
+<img src="assets/MyCloud.png" width="300" height="120">
 ## Description
 
 Cloud storage where you can store your files, download and use their links to put in other
