@@ -1,33 +1,37 @@
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import type { TUsersList, TUsersListState } from '../../types'
+import type { TUsersList, TUsersListState } from "../../types";
 
 const initialState: TUsersListState = {
   usersList: null,
   loading: false,
-  error: null
-}
+  error: null,
+};
 
 const usersListSlice = createSlice({
-  name: 'usersList',
+  name: "usersList",
   initialState,
   reducers: {
     getUsersListRequest: (state) => {
-      state.loading = true
-      state.error = null
+      state.loading = true;
+      state.error = null;
     },
     getUsersListFailure: (state, action: PayloadAction<{ error: string }>) => {
-      state.loading = false
-      state.error = action.payload.error
+      state.loading = false;
+      state.error = action.payload.error;
     },
-    getUsersListSuccess: (state, action: PayloadAction<{ usersList: TUsersList }>) => {
-      state.usersList = action.payload.usersList
-      state.loading = false
-      state.error = null
-    }
-  }
-})
+    getUsersListSuccess: (
+      state,
+      action: PayloadAction<{ usersList: TUsersList }>
+    ) => {
+      state.usersList = action.payload.usersList;
+      state.loading = false;
+      state.error = null;
+    },
+  },
+});
 
-export const { getUsersListFailure, getUsersListRequest, getUsersListSuccess } = usersListSlice.actions
-export default usersListSlice.reducer
+export const { getUsersListFailure, getUsersListRequest, getUsersListSuccess } =
+  usersListSlice.actions;
+export default usersListSlice.reducer;
