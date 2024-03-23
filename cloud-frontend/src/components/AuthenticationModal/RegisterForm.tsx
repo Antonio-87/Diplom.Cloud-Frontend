@@ -1,97 +1,122 @@
-import { Button, Checkbox, Form, Input } from 'antd'
-import { useState } from 'react'
+import { Button, Checkbox, Form, Input } from "antd";
+import { useState } from "react";
 
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { fetchTokenRequest } from '../../redux/slices/tokenSlice'
-import { createUserRequest } from '../../redux/slices/userSlice'
-import { emailErrorValidator, passwordErrorValidator, usernameErrorValidator } from '../../validators/errorValidator'
-import AgreementModal from './AgreementModal'
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { fetchTokenRequest } from "../../redux/slices/tokenSlice";
+import { createUserRequest } from "../../redux/slices/userSlice";
+import {
+  emailErrorValidator,
+  passwordErrorValidator,
+  usernameErrorValidator,
+} from "../../validators/errorValidator";
+import AgreementModal from "./AgreementModal";
 
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 8 }
+    sm: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 16 }
-  }
-}
+    sm: { span: 16 },
+  },
+};
 
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 24,
-      offset: 0
+      offset: 0,
     },
     sm: {
       span: 16,
-      offset: 8
-    }
-  }
-}
+      offset: 8,
+    },
+  },
+};
 
 type RegisterFormProps = {
-  onRegisterFormClose: () => void
-}
+  onRegisterFormClose: () => void;
+};
 
 type TFormValues = {
-  username: string
-  fullname: string
-  email: string
-  password: string
-  confirm: string
-}
+  username: string;
+  fullname: string;
+  email: string;
+  password: string;
+  confirm: string;
+};
 
-function RegisterForm ({ onRegisterFormClose }: RegisterFormProps): JSX.Element {
-  const dispatch = useAppDispatch()
-  const userStateError = useAppSelector(state => state.user.error)
-  const [isAgreementOpen, setIsAgreementOpen] = useState(false)
-  let errorObject
+const RegisterForm = ({
+  onRegisterFormClose,
+}: RegisterFormProps): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const userStateError = useAppSelector((state) => state.user.error);
+  const [isAgreementOpen, setIsAgreementOpen] = useState(false);
+  let errorObject;
 
   try {
     if (userStateError) {
-      errorObject = JSON.parse(userStateError)
+      errorObject = JSON.parse(userStateError);
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 
   const onFinish = (values: TFormValues): void => {
     void new Promise((resolve) => {
-      resolve(dispatch(createUserRequest({
-        username: values.username,
-        fullName: values.fullname,
-        email: values.email,
-        password: values.password,
-        repeatPassword: values.confirm
-      })))
+      resolve(
+        dispatch(
+          createUserRequest({
+            username: values.username,
+            fullName: values.fullname,
+            email: values.email,
+            password: values.password,
+            repeatPassword: values.confirm,
+          })
+        )
+      );
     }).then(() => {
-      void dispatch(fetchTokenRequest({
-        username: values.username,
-        password: values.password,
-        remember: true
-      }))
-    })
-  }
+      void dispatch(
+        fetchTokenRequest({
+          username: values.username,
+          password: values.password,
+          remember: true,
+        })
+      );
+    });
+  };
 
   return (
     <>
-      <AgreementModal isOpen={isAgreementOpen} setIsOpen={() => { setIsAgreementOpen(false) }} />
+      <AgreementModal
+        isOpen={isAgreementOpen}
+        setIsOpen={() => {
+          setIsAgreementOpen(false);
+        }}
+      />
       <Form
         {...formItemLayout}
         name="register"
         onFinish={onFinish}
-        initialValues={{ residence: ['zhejiang', 'hangzhou', 'xihu'], prefix: '86' }}
+        initialValues={{
+          residence: ["zhejiang", "hangzhou", "xihu"],
+          prefix: "86",
+        }}
         style={{ maxWidth: 600 }}
         scrollToFirstError
       >
         <Form.Item
           name="username"
           label="Username"
-          validateStatus={(usernameErrorValidator(errorObject) && 'error') || undefined}
-          help={(usernameErrorValidator(errorObject) && errorObject.username) || undefined}
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          validateStatus={
+            (usernameErrorValidator(errorObject) && "error") || undefined
+          }
+          help={
+            (usernameErrorValidator(errorObject) && errorObject.username) ||
+            undefined
+          }
+          rules={[{ required: true, message: "Please input your username!" }]}
         >
           <Input />
         </Form.Item>
@@ -99,7 +124,7 @@ function RegisterForm ({ onRegisterFormClose }: RegisterFormProps): JSX.Element 
         <Form.Item
           name="fullname"
           label="Full Name"
-          rules={[{ required: true, message: 'Please input your full name!' }]}
+          rules={[{ required: true, message: "Please input your full name!" }]}
         >
           <Input />
         </Form.Item>
@@ -107,17 +132,21 @@ function RegisterForm ({ onRegisterFormClose }: RegisterFormProps): JSX.Element 
         <Form.Item
           name="email"
           label="E-mail"
-          validateStatus={(emailErrorValidator(errorObject) && 'error') || undefined}
-          help={(emailErrorValidator(errorObject) && errorObject.email) || undefined}
+          validateStatus={
+            (emailErrorValidator(errorObject) && "error") || undefined
+          }
+          help={
+            (emailErrorValidator(errorObject) && errorObject.email) || undefined
+          }
           rules={[
             {
-              type: 'email',
-              message: 'The input is not valid E-mail!'
+              type: "email",
+              message: "The input is not valid E-mail!",
             },
             {
               required: true,
-              message: 'Please input your E-mail!'
-            }
+              message: "Please input your E-mail!",
+            },
           ]}
         >
           <Input />
@@ -126,12 +155,14 @@ function RegisterForm ({ onRegisterFormClose }: RegisterFormProps): JSX.Element 
         <Form.Item
           name="password"
           label="Password"
-          validateStatus={(passwordErrorValidator(errorObject) && 'error') || undefined}
+          validateStatus={
+            (passwordErrorValidator(errorObject) && "error") || undefined
+          }
           rules={[
             {
               required: true,
-              message: 'Please input your password!'
-            }
+              message: "Please input your password!",
+            },
           ]}
         >
           <Input.Password />
@@ -140,22 +171,30 @@ function RegisterForm ({ onRegisterFormClose }: RegisterFormProps): JSX.Element 
         <Form.Item
           name="confirm"
           label="Confirm Password"
-          validateStatus={(passwordErrorValidator(errorObject) && 'error') || undefined}
-          help={(passwordErrorValidator(errorObject) && errorObject.password) || undefined}
-          dependencies={['password']}
+          validateStatus={
+            (passwordErrorValidator(errorObject) && "error") || undefined
+          }
+          help={
+            (passwordErrorValidator(errorObject) && errorObject.password) ||
+            undefined
+          }
+          dependencies={["password"]}
           rules={[
             {
               required: true,
-              message: 'Please confirm your password!'
+              message: "Please confirm your password!",
             },
             ({ getFieldValue }) => ({
-              async validator (_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  await Promise.resolve(); return
+              async validator(_, value) {
+                if (!value || getFieldValue("password") === value) {
+                  await Promise.resolve();
+                  return;
                 }
-                return await Promise.reject(new Error('The new password that you entered do not match!'))
-              }
-            })
+                return await Promise.reject(
+                  new Error("The new password that you entered do not match!")
+                );
+              },
+            }),
           ]}
         >
           <Input.Password />
@@ -166,17 +205,28 @@ function RegisterForm ({ onRegisterFormClose }: RegisterFormProps): JSX.Element 
           valuePropName="checked"
           rules={[
             {
-              validator: async (_, value) => { value ? await Promise.resolve() : await Promise.reject(new Error('Should accept agreement')) }
-            }
+              validator: async (_, value) => {
+                value
+                  ? await Promise.resolve()
+                  : await Promise.reject(new Error("Should accept agreement"));
+              },
+            },
           ]}
           {...tailFormItemLayout}
         >
           <Checkbox>
-            I have read the <a onClick={() => { setIsAgreementOpen(true) }}>agreement</a>
+            I have read the{" "}
+            <a
+              onClick={() => {
+                setIsAgreementOpen(true);
+              }}
+            >
+              agreement
+            </a>
           </Checkbox>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          <Button style={{ marginRight: '1em' }} onClick={onRegisterFormClose} >
+          <Button style={{ marginRight: "1em" }} onClick={onRegisterFormClose}>
             Back
           </Button>
           <Button type="primary" htmlType="submit">
@@ -185,7 +235,7 @@ function RegisterForm ({ onRegisterFormClose }: RegisterFormProps): JSX.Element 
         </Form.Item>
       </Form>
     </>
-  )
-}
+  );
+};
 
-export default RegisterForm
+export default RegisterForm;

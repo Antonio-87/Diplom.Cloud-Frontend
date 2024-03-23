@@ -9,7 +9,7 @@ import { clearTokenData } from "../../redux/slices/tokenSlice";
 import UploadModal from "../UploadModal/UploadModal";
 import UserModal from "./UserModal";
 
-function Header(): JSX.Element {
+const Header = (): JSX.Element => {
   const userState = useAppSelector((state) => state.user);
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -96,6 +96,6 @@ function Header(): JSX.Element {
       </Flex>
     </Flex>
   );
-}
+};
 
 export default Header;

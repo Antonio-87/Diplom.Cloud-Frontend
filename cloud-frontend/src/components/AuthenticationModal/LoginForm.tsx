@@ -1,30 +1,44 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Checkbox, Form, Input } from 'antd'
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input } from "antd";
 
-import { useAppDispatch } from '../../redux/hooks'
-import { fetchTokenRequest } from '../../redux/slices/tokenSlice'
+import { useAppDispatch } from "../../redux/hooks";
+import { fetchTokenRequest } from "../../redux/slices/tokenSlice";
 
-type TErrorMessage = {
-  status: 'error'
-  text: string
-} | undefined
+type TErrorMessage =
+  | {
+      status: "error";
+      text: string;
+    }
+  | undefined;
 
 type LoginFormProps = {
-  error: string | null
-  onRegisterFormOpen: () => void
-}
+  error: string | null;
+  onRegisterFormOpen: () => void;
+};
 
-function LoginForm ({ error, onRegisterFormOpen }: LoginFormProps): JSX.Element {
-  const dispatch = useAppDispatch()
-  const errorMessage: TErrorMessage = error === 'Unauthorized' ? { status: 'error', text: 'Please check provided Login and Password' } : undefined
+const LoginForm = ({
+  error,
+  onRegisterFormOpen,
+}: LoginFormProps): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const errorMessage: TErrorMessage =
+    error === "Unauthorized"
+      ? { status: "error", text: "Please check provided Login and Password" }
+      : undefined;
 
-  const onFinish = (values: { username: string, password: string, remember: boolean }): void => {
-    void dispatch(fetchTokenRequest({
-      username: values.username,
-      password: values.password,
-      remember: values.remember
-    }))
-  }
+  const onFinish = (values: {
+    username: string;
+    password: string;
+    remember: boolean;
+  }): void => {
+    void dispatch(
+      fetchTokenRequest({
+        username: values.username,
+        password: values.password,
+        remember: values.remember,
+      })
+    );
+  };
 
   return (
     <Form
@@ -35,17 +49,18 @@ function LoginForm ({ error, onRegisterFormOpen }: LoginFormProps): JSX.Element 
     >
       <Form.Item
         name="username"
-        rules={[{ required: true, message: 'Please input your Username!' }]}
+        rules={[{ required: true, message: "Please input your Username!" }]}
         validateStatus={errorMessage?.status}
         help={errorMessage?.text}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Username"
+        />
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[
-          { required: true, message: 'Please input your Password!' }
-        ]}
+        rules={[{ required: true, message: "Please input your Password!" }]}
         validateStatus={errorMessage?.status}
         help={errorMessage?.text}
       >
@@ -65,10 +80,12 @@ function LoginForm ({ error, onRegisterFormOpen }: LoginFormProps): JSX.Element 
         <Button type="primary" htmlType="submit" className="login-form-button">
           Log in
         </Button>
-        <Button type='link' onClick={onRegisterFormOpen}>Or register now!</Button>
+        <Button type="link" onClick={onRegisterFormOpen}>
+          Or register now!
+        </Button>
       </Form.Item>
     </Form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

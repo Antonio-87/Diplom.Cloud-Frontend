@@ -1,12 +1,12 @@
-import { GithubOutlined } from '@ant-design/icons'
-import { Flex } from 'antd'
+import { GithubOutlined } from "@ant-design/icons";
+import { Flex } from "antd";
 
-function Footer (): JSX.Element {
+const Footer = (): JSX.Element => {
   return (
-        <Flex style={{ margin: '1em' }}>
-            <GithubOutlined />
-        </Flex>
-  )
-}
+    <Flex style={{ margin: "1em" }}>
+      <GithubOutlined />
+    </Flex>
+  );
+};
 
-export default Footer
+export default Footer;

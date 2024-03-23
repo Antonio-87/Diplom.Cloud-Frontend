@@ -18,11 +18,11 @@ const sizeConverter = (size: number): string => {
   }
 };
 
-function StorageStats({
+const StorageStats = ({
   filesCount,
   filesSize,
   maxSize,
-}: StorageStatsProps): JSX.Element {
+}: StorageStatsProps): JSX.Element => {
   return (
     <Flex style={{ justifyContent: "start" }}>
       <Statistic title="Files count" value={filesCount} />
@@ -34,7 +34,7 @@ function StorageStats({
       />
     </Flex>
   );
-}
+};
 
 export { sizeConverter };
 export default StorageStats;

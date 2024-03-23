@@ -1,33 +1,33 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter } from "react-router-dom";
 
-import AdminPanel from './components/AdminPanel/AdminPanel'
-import ErrorElement from './components/ErrorElement/ErrorElement'
-import Main from './components/Main/Main'
-import RootElement from './components/RootElement/RootElement'
+import AdminPanel from "./components/AdminPanel/AdminPanel";
+import ErrorElement from "./components/ErrorElement/ErrorElement";
+import Main from "./components/Main/Main";
+import RootElement from "./components/RootElement/RootElement";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <RootElement />,
     children: [
       {
-        path: '/',
-        element: <Main />
+        path: "/",
+        element: <Main />,
       },
       {
-        path: 'admin',
-        element: <AdminPanel />
+        path: "admin",
+        element: <AdminPanel />,
       },
       {
-        path: 'admin/storages/:id',
-        element: <Main />
+        path: "admin/storages/:id",
+        element: <Main />,
       },
       {
-        path: '*',
-        element: <ErrorElement />
-      }
-    ]
-  }
-])
+        path: "*",
+        element: <ErrorElement />,
+      },
+    ],
+  },
+]);
 
-export default router
+export default router;

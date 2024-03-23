@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 const fileSchema = z.object({
   pk: z.number(),
@@ -10,12 +10,12 @@ const fileSchema = z.object({
   url_path: z.string(),
   note: z.string(),
   last_download: z.string().nullable(),
-  created_at: z.string()
-})
+  created_at: z.string(),
+});
 
 const fileStateSchema = z.object({
   loading: z.boolean(),
-  error: z.string().nullable()
-})
+  error: z.string().nullable(),
+});
 
-export { fileSchema, fileStateSchema }
+export { fileSchema, fileStateSchema };
