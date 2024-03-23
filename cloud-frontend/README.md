@@ -7,7 +7,7 @@
 Cloud storage where you can store your files, download and use their links to put in other
 services. The design is made using the antd library.
 
-Backend -https://github.com/Antonio-87/Diplom.Cloud.Backend.git <br />
+Backend - https://github.com/Antonio-87/Diplom.Cloud.Backend.git <br />
 Frontend - https://github.com/Antonio-87/Diplom.Cloud.Frontend.git
 
 ## Toolset
