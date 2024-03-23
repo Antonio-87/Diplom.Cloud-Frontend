@@ -1,70 +1,83 @@
-import { jwtDecode } from 'jwt-decode'
+import { jwtDecode } from "jwt-decode";
 
-import { accessTokenSchema, decodedTokenSchema, tokenSchema } from '../validators/tokenValidator'
+import {
+  accessTokenSchema,
+  decodedTokenSchema,
+  tokenSchema,
+} from "../validators/tokenValidator";
 
-async function fetchToken (username: string, password: string, remember: boolean): Promise<{ access: string, expiration: number, user_id: number }> {
+const fetchToken = async (
+  username: string,
+  password: string,
+  remember: boolean
+): Promise<{ access: string; expiration: number; user_id: number }> => {
   const body = {
     username,
-    password
-  }
+    password,
+  };
   const response = await fetch(`${import.meta.env.VITE_SERVER_URL}token/`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(body)
-  })
+    body: JSON.stringify(body),
+  });
   if (!response.ok) {
-    throw new Error(response.statusText)
+    throw new Error(response.statusText);
   }
-  const data = await response.json()
-  const validatedToken = tokenSchema.safeParse(data)
+  const data = await response.json();
+  const validatedToken = tokenSchema.safeParse(data);
   if (!validatedToken.success) {
-    throw new Error(validatedToken.error.toString())
+    throw new Error(validatedToken.error.toString());
   }
   if (remember) {
-    localStorage.setItem('jwtTokenRefresh', validatedToken.data.refresh)
+    localStorage.setItem("jwtTokenRefresh", validatedToken.data.refresh);
   }
-  const decodedToken = jwtDecode(validatedToken.data.access)
-  const validatedDecodedToken = decodedTokenSchema.safeParse(decodedToken)
+  const decodedToken = jwtDecode(validatedToken.data.access);
+  const validatedDecodedToken = decodedTokenSchema.safeParse(decodedToken);
   if (!validatedDecodedToken.success) {
-    throw new Error(validatedDecodedToken.error.toString())
+    throw new Error(validatedDecodedToken.error.toString());
   }
   return {
     access: validatedToken.data.access,
     expiration: validatedDecodedToken.data.exp * 1000,
-    user_id: validatedDecodedToken.data.user_id
-  }
-}
+    user_id: validatedDecodedToken.data.user_id,
+  };
+};
 
-async function fetchRefreshToken (refresh: string): Promise<{ access: string, expiration: number }> {
+async function fetchRefreshToken(
+  refresh: string
+): Promise<{ access: string; expiration: number }> {
   const body = {
-    refresh
-  }
-  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}token/refresh/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  })
+    refresh,
+  };
+  const response = await fetch(
+    `${import.meta.env.VITE_SERVER_URL}token/refresh/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
   if (!response.ok) {
-    throw new Error(response.statusText)
+    throw new Error(response.statusText);
   }
-  const data = await response.json()
-  const validatedAccessToken = accessTokenSchema.safeParse(data)
+  const data = await response.json();
+  const validatedAccessToken = accessTokenSchema.safeParse(data);
   if (!validatedAccessToken.success) {
-    throw new Error(validatedAccessToken.error.toString())
+    throw new Error(validatedAccessToken.error.toString());
   }
-  const decodedToken = jwtDecode(validatedAccessToken.data.access)
-  const validatedDecodedToken = decodedTokenSchema.safeParse(decodedToken)
+  const decodedToken = jwtDecode(validatedAccessToken.data.access);
+  const validatedDecodedToken = decodedTokenSchema.safeParse(decodedToken);
   if (!validatedDecodedToken.success) {
-    throw new Error(validatedDecodedToken.error.toString())
+    throw new Error(validatedDecodedToken.error.toString());
   }
   return {
     access: validatedAccessToken.data.access,
-    expiration: validatedDecodedToken.data.exp * 1000
-  }
+    expiration: validatedDecodedToken.data.exp * 1000,
+  };
 }
 
-export { fetchRefreshToken, fetchToken }
+export { fetchRefreshToken, fetchToken };
