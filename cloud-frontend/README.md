@@ -1,6 +1,6 @@
-# MY CLOUD
+<img src="assets/MyCloud.png" width="300" height="120">
 
-![Alt text](assets/MyCloud.png)
+# My cloud
 
 ## Description
 
