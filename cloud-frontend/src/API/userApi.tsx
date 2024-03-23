@@ -1,43 +1,132 @@
-import { IUser } from "../interfaces/userInterface";
+import type { TEditFormStates } from '../components/Header/hooks'
+import type { TUser, TUsersList } from '../types'
+import { userSchema, usersListSchema } from '../validators/userValidator'
 
-type UserResult = IUser | Error;
+async function createUser (username: string, fullName: string, email: string, password: string, repeatPassword: string): Promise<TUser> {
+  const formData = new FormData()
+  formData.append('username', username)
+  formData.append('full_name', fullName)
+  formData.append('email', email)
+  formData.append('password', password)
+  formData.append('repeat_password', repeatPassword)
 
-const createUser = async (user: {
-  login: string;
-  fullName: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-}): Promise<UserResult> => {
-  try {
-    const formData = new FormData();
-    formData.append("username", user.login);
-    formData.append("full_name", user.fullName);
-    formData.append("email", user.email);
-    formData.append("password", user.password);
-    formData.append("repeat_password", user.repeatPassword);
-
-    console.log(formData);
-
-    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}users/`, {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) throw new Error(JSON.stringify(await response.json()));
-
-    const data = await response.json();
-    console.log(data);
-    const userData: IUser = JSON.parse(data);
-    for (const key of Object.keys(userData)) {
-      if (!(key in userData)) {
-        throw new Error("Data does not match the IUser interface");
-      }
-    }
-    return userData;
-  } catch (error) {
-    return new Error("An error occurred during user creation");
+  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}users/`, {
+    method: 'POST',
+    body: formData
+  })
+  if (!response.ok) {
+    throw new Error(JSON.stringify(await response.json()))
   }
-};
+  const data = await response.json()
+  const validatedUser = userSchema.safeParse(data)
+  if (!validatedUser.success) {
+    throw new Error(validatedUser.error.toString())
+  }
+  return validatedUser.data
+}
 
-export { createUser };
+async function fetchUser (userId: number, token: string): Promise<TUser> {
+  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}users/${userId}/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+  const data = await response.json()
+  const validatedUser = userSchema.safeParse(data)
+  if (!validatedUser.success) {
+    throw new Error(validatedUser.error.toString())
+  }
+  return validatedUser.data
+}
+
+async function updateUser (userId: number, token: string, states: TEditFormStates): Promise<TUser> {
+  const formData = new FormData()
+  if (states.enableUsername) {
+    formData.append('username', states.userName)
+  }
+  if (states.enableFullName) {
+    formData.append('full_name', states.fullName)
+  }
+  if (states.enableEmail) {
+    formData.append('email', states.email)
+  }
+  if (states.enablePassword) {
+    formData.append('current_password', states.currentPassword)
+    formData.append('password', states.newPassword)
+    formData.append('repeat_password', states.repeatPassword)
+  }
+
+  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}users/update/${userId}/`, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: formData
+  })
+  if (!response.ok) {
+    throw new Error(JSON.stringify(await response.json()))
+  }
+  const data = await response.json()
+  const validatedUser = userSchema.safeParse(data)
+  if (!validatedUser.success) {
+    throw new Error(validatedUser.error.toString())
+  }
+  return validatedUser.data
+}
+
+async function deleteUser (userId: number, token: string): Promise<void> {
+  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}users/delete/${userId}/`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+}
+
+async function fetchUsersList (token: string): Promise<TUsersList> {
+  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}users/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+  const data = await response.json()
+  const validatedUsersList = usersListSchema.safeParse(data)
+  if (!validatedUsersList.success) {
+    throw new Error(validatedUsersList.error.toString())
+  }
+  return validatedUsersList.data
+}
+
+async function updateUserAdminStatus (userId: number, status: string, token: string): Promise<TUser> {
+  const formData = new FormData()
+  formData.append('is_staff', status)
+  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}users/update/${userId}/`, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: formData
+  })
+  if (!response.ok) {
+    throw new Error(JSON.stringify(await response.json()))
+  }
+  const data = await response.json()
+  const validatedUser = userSchema.safeParse(data)
+  if (!validatedUser.success) {
+    throw new Error(validatedUser.error.toString())
+  }
+  return validatedUser.data
+}
+
+export { createUser, deleteUser, fetchUser, fetchUsersList, updateUser, updateUserAdminStatus }
