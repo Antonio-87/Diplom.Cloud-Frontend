@@ -72,7 +72,6 @@ const UploadModal = (): JSX.Element => {
         }
         type="primary"
         onClick={showModal}
-        // style={{ backgroundColor: "#092954" }}
       >
         Upload File
       </Button>

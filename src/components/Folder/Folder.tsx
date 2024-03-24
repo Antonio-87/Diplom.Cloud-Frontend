@@ -1,7 +1,6 @@
-import "./Folder.css";
-
-import { FolderOutlined } from "@ant-design/icons";
+import { FolderOpenOutlined, FolderOutlined } from "@ant-design/icons";
 import { Flex, Typography } from "antd";
+import { useState } from "react";
 const { Text } = Typography;
 
 type FolderProps = {
@@ -15,6 +14,7 @@ const Folder = ({
   path,
   onPathChange,
 }: FolderProps): JSX.Element => {
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   let folderName: string;
   if (currentPath === "") {
     folderName = path.split("/")[0];
@@ -31,8 +31,19 @@ const Folder = ({
       onClick={() => {
         onPathChange(`${currentPath}${folderName}/`);
       }}
+      onMouseEnter={() => {
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+      }}
     >
-      <FolderOutlined style={{ fontSize: "5em", color: "#092954" }} />
+      {isHovered ? (
+        <FolderOpenOutlined style={{ fontSize: "5em", color: "#092954" }} />
+      ) : (
+        <FolderOutlined style={{ fontSize: "5em", color: "#092954" }} />
+      )}
+
       <Text>{folderName}</Text>
     </Flex>
   );
