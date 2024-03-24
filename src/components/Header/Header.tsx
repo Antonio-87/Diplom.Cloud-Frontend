@@ -1,6 +1,13 @@
 import { EditTwoTone, UserOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Avatar, Badge, Button, Dropdown, Flex } from "antd";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Dropdown,
+  Flex,
+  type MenuProps,
+  Typography,
+} from "antd";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -59,16 +66,22 @@ const Header = (): JSX.Element => {
         }}
       />
       <UploadModal />
-      <img src="/MyCloud.png" alt="MyCloud" style={{ height: "3em" }} />
+      <Typography.Title level={1} style={{ margin: 0 }}>
+        My Cloud
+      </Typography.Title>
       {userState.user?.is_staff ? (
         location.pathname === "/admin/" ? (
           <Link to="/">
-            <Button danger>My Storage</Button>
+            <Button style={{ color: "green", borderColor: "green" }} danger>
+              My Storage
+            </Button>
           </Link>
         ) : location.pathname.startsWith("/admin/storages/") ? (
           <>
             <Link to="/">
-              <Button danger>My Storage</Button>
+              <Button style={{ color: "green", borderColor: "green" }} danger>
+                My Storage
+              </Button>
             </Link>
             <Link to="admin/">
               <Button danger>Admin Panel</Button>

@@ -69,6 +69,9 @@ const UploadModal = (): JSX.Element => {
         }
         type="primary"
         onClick={showModal}
+        style={{
+          backgroundColor: "#092954",
+        }}
       >
         Upload File
       </Button>
@@ -86,6 +89,9 @@ const UploadModal = (): JSX.Element => {
             type="primary"
             loading={fileState.loading}
             onClick={handleOk}
+            style={{
+              backgroundColor: "#092954",
+            }}
           >
             Upload
           </Button>,

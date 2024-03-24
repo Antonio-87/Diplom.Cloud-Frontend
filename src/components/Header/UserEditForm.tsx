@@ -25,6 +25,7 @@ const UserEditForm = (
   return (
     <>
       <Switch
+        style={{ backgroundColor: props.enableUsername ? "#092954" : "" }}
         checked={props.enableUsername}
         onChange={props.setEnableUsername}
       />
@@ -48,6 +49,7 @@ const UserEditForm = (
         </Form.Item>
       </Form>
       <Switch
+        style={{ backgroundColor: props.enableFullName ? "#092954" : "" }}
         checked={props.enableFullName}
         onChange={props.setEnableFullName}
       />
@@ -61,7 +63,11 @@ const UserEditForm = (
           />
         </Form.Item>
       </Form>
-      <Switch checked={props.enableEmail} onChange={props.setEnableEmail} />
+      <Switch
+        style={{ backgroundColor: props.enableEmail ? "#092954" : "" }}
+        checked={props.enableEmail}
+        onChange={props.setEnableEmail}
+      />
       <Form disabled={!props.enableEmail}>
         <Form.Item
           name="email"
@@ -88,6 +94,7 @@ const UserEditForm = (
         </Form.Item>
       </Form>
       <Switch
+        style={{ backgroundColor: props.enablePassword ? "#092954" : "" }}
         checked={props.enablePassword}
         onChange={props.setEnablePassword}
       />

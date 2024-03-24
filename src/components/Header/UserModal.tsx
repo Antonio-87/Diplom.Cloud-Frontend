@@ -81,7 +81,12 @@ const UserModal = ({ open, onClose }: UserModalProps): JSX.Element => {
         <Button key="back" onClick={handleCancel}>
           Cancel
         </Button>,
-        <Button key="submit" type="primary" onClick={handleOk}>
+        <Button
+          key="submit"
+          type="primary"
+          onClick={handleOk}
+          style={{ backgroundColor: "#092954" }}
+        >
           Update
         </Button>,
         <div key="delete" style={{ width: "9em" }}>
