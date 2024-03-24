@@ -32,7 +32,7 @@ const Folder = ({
         onPathChange(`${currentPath}${folderName}/`);
       }}
     >
-      <FolderOutlined style={{ fontSize: "5em", color: "#1677ff " }} />
+      <FolderOutlined style={{ fontSize: "5em", color: "#092954" }} />
       <Text>{folderName}</Text>
     </Flex>
   );

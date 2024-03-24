@@ -106,7 +106,7 @@ const File = ({
     <>
       <Dropdown menu={{ items }} placement="bottomLeft" arrow>
         <Flex vertical align="center" style={{ cursor: "pointer" }}>
-          <FileOutlined style={{ fontSize: "5em", color: "#1677ff " }} />
+          <FileOutlined style={{ fontSize: "5em", color: "#092954" }} />
           <Text>{file.name}</Text>
         </Flex>
       </Dropdown>

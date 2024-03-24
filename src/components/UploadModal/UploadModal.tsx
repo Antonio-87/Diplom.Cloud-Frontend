@@ -1,3 +1,5 @@
+import "./UploadModal.css";
+
 import { Button, Modal } from "antd";
 import type { RcFile } from "antd/es/upload/interface";
 import { useState } from "react";
@@ -63,15 +65,14 @@ const UploadModal = (): JSX.Element => {
   return (
     <>
       <Button
+        className="custom-button"
         disabled={
           location.pathname.includes("/admin") ||
           location.pathname.startsWith("/admin/storages/")
         }
         type="primary"
         onClick={showModal}
-        style={{
-          backgroundColor: "#092954",
-        }}
+        // style={{ backgroundColor: "#092954" }}
       >
         Upload File
       </Button>
