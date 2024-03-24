@@ -80,9 +80,7 @@ const UploadModal = (): JSX.Element => {
           setIsHovered(false);
         }}
         style={
-          isHovered
-            ? { backgroundColor: "#254e83" }
-            : { backgroundColor: "#092954" }
+          isHovered ? { backgroundColor: "#254e83" } : { backgroundColor: "" }
         }
       >
         Upload File
