@@ -20,6 +20,7 @@ const UploadModal = (): JSX.Element => {
   const [file, setFile] = useState<RcFile | null>(null);
   const [name, setName] = useState("");
   const [note, setNote] = useState("");
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const location = useLocation();
 
   const showModal = (): void => {
@@ -72,6 +73,17 @@ const UploadModal = (): JSX.Element => {
         }
         type="primary"
         onClick={showModal}
+        onMouseEnter={() => {
+          setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+        }}
+        style={
+          isHovered
+            ? { backgroundColor: "#254e83" }
+            : { backgroundColor: "#092954" }
+        }
       >
         Upload File
       </Button>
