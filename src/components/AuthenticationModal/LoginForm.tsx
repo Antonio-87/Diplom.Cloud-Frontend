@@ -1,5 +1,6 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
+import { useState } from "react";
 
 import { useAppDispatch } from "../../redux/hooks";
 import { fetchTokenRequest } from "../../redux/slices/tokenSlice";
@@ -21,6 +22,7 @@ const LoginForm = ({
   onRegisterFormOpen,
 }: LoginFormProps): JSX.Element => {
   const dispatch = useAppDispatch();
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const errorMessage: TErrorMessage =
     error === "Unauthorized"
       ? { status: "error", text: "Please check provided Login and Password" }
@@ -77,7 +79,22 @@ const LoginForm = ({
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="login-form-button"
+          onMouseEnter={() => {
+            setIsHovered(true);
+          }}
+          onMouseLeave={() => {
+            setIsHovered(false);
+          }}
+          style={
+            isHovered
+              ? { backgroundColor: "#254e83" }
+              : { backgroundColor: "#092954" }
+          }
+        >
           Log in
         </Button>
         <Button type="link" onClick={onRegisterFormOpen}>
