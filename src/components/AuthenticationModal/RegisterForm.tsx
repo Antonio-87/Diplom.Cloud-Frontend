@@ -53,6 +53,7 @@ const RegisterForm = ({
   const dispatch = useAppDispatch();
   const userStateError = useAppSelector((state) => state.user.error);
   const [isAgreementOpen, setIsAgreementOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   let errorObject;
 
   try {
@@ -229,7 +230,21 @@ const RegisterForm = ({
           <Button style={{ marginRight: "1em" }} onClick={onRegisterFormClose}>
             Back
           </Button>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            onMouseEnter={() => {
+              setIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              setIsHovered(false);
+            }}
+            style={
+              isHovered
+                ? { backgroundColor: "#254e83" }
+                : { backgroundColor: "#092954" }
+            }
+          >
             Register
           </Button>
         </Form.Item>

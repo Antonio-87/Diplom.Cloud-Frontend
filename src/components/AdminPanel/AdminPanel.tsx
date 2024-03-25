@@ -57,7 +57,9 @@ const AdminPanel = (): JSX.Element => {
             </div>
             <div style={{ marginTop: "1em" }}>
               <Link to={`storages/${user.id}/`}>
-                <Button type="primary">Show Storage</Button>
+                <Button className="custom-button" type="primary" block>
+                  Show Storage
+                </Button>
               </Link>
               <PopoverWrapper
                 message="Are you sure?"
@@ -85,6 +87,7 @@ const AdminPanel = (): JSX.Element => {
                       ? { borderColor: "green", color: "green" }
                       : {}
                   }
+                  block
                 >
                   {user.is_staff ? "Remove Admin Status" : "Set Admin Status"}
                 </Button>
@@ -103,7 +106,7 @@ const AdminPanel = (): JSX.Element => {
                   }
                 }}
               >
-                <Button type="primary" danger>
+                <Button type="primary" danger block>
                   Delete Account
                 </Button>
               </PopoverWrapper>
