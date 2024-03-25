@@ -1,5 +1,3 @@
-<img src="assets/MyCloud.png" width="300" height="250">
-
 # My cloud
 
 ## Description
