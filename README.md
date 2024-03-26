@@ -24,3 +24,10 @@ Frontend - https://github.com/Antonio-87/Diplom.Cloud.Frontend.git
   - Configure variables:
     - VITE_SERVER_URL=http://\<server ip address>/api/
     - VITE_SERVER_BASE_URL=http://\<server ip address>/
+  - npm run build
+  - Do deployment steps from https://github.com/Antonio-87/Diplom.Cloud.Backend.git
+  - Connect to the server through ssh
+  - sudo chmod 707 /usr/share/nginx/html
+  - sudo chmod 707 /usr/share/nginx/html/index.html
+  - Disconnect from the server
+  - scp -r dist/\* \<server user>@\<server ip address>:/usr/share/nginx/html
