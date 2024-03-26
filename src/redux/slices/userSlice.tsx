@@ -92,7 +92,7 @@ const userSlice = createSlice({
       .addCase(
         createUserRequest.rejected.toString(),
         (state, action: PayloadAction<{ error: { message: string } }>) => {
-          state.error = action.payload.error.message;
+          state.error = action.payload?.error?.message;
           state.loading = false;
         }
       );
