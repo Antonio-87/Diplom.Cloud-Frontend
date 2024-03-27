@@ -22,8 +22,8 @@ Frontend - https://github.com/Antonio-87/Diplom.Cloud.Frontend.git
 - Configure .env file
   - create .env file in the root directory (where the package.json is located)
   - Configure variables:
-    - VITE_SERVER_URL=http://\<server ip address>/api/
-    - VITE_SERVER_BASE_URL=http://\<server ip address>/
+    - VITE_SERVER_URL=http://\<server ip address>/backend/api/
+    - VITE_SERVER_BASE_URL=http://\<server ip address>/backend
   - npm run build
   - Do deployment steps from https://github.com/Antonio-87/Diplom.Cloud.Backend.git
   - Connect to the server through ssh
